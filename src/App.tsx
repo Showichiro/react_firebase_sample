@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { addDoc, collection } from 'firebase/firestore';
+import { firebaseFirestore } from './firebase';
 
 interface AppProps {}
 
@@ -12,30 +13,18 @@ function App({}: AppProps) {
     const timer = setTimeout(() => setCount(count + 1), 1000);
     return () => clearTimeout(timer);
   }, [count, setCount]);
-  // Return the App component.
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <p>
-          Page has been open for <code>{count}</code> seconds.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
-    </div>
-  );
-}
 
+  // Add this section
+  useEffect(() => {
+    addDoc(collection(firebaseFirestore, 'people'), { name: 'Adam' })
+      .then((docRef) => {
+        console.log('Document written with ID: ', docRef.id);
+      })
+      .catch((e) => {
+        console.error('Error adding document: ', e);
+      })
+      .finally(() => console.log('finally'));
+  }, [count]);
+  return <div>...</div>;
+}
 export default App;
