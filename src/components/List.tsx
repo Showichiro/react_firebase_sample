@@ -11,10 +11,9 @@ type ListProps = {
 export const List: FC<ListProps> = ({ user }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   useEffect(() => {
-    const col = collection(
-      firebaseFirestore,
-      `/users/${user.uid}/messages`,
-    ).withConverter(MessageConvertor);
+    const col = collection(firebaseFirestore, `/messages`).withConverter(
+      MessageConvertor,
+    );
     const unsubscribe = onSnapshot(col, {
       next: (sn) => {
         setMessages(sn.docs.map((docSn) => docSn.data()));
@@ -25,7 +24,13 @@ export const List: FC<ListProps> = ({ user }) => {
   return (
     <ul>
       {messages.map((message) => (
-        <li>{JSON.stringify(message)}</li>
+        <li
+          key={`${message.content}-${
+            message.userId
+          }-${message.createdAt?.getTime()}`}
+        >
+          {JSON.stringify(message)}
+        </li>
       ))}
     </ul>
   );

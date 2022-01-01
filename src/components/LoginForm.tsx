@@ -39,9 +39,7 @@ export const LoginForm: FC = () => {
               firebaseAuth,
               auth.email,
               auth.passwd,
-            ).catch((e) => {
-              window.alert(e);
-            });
+            ).catch((e) => window.alert(e));
           }}
         >
           ログイン

@@ -18,7 +18,6 @@ export const MessageConvertor: FirestoreDataConverter<Message> = {
   fromFirestore: (sn) => {
     const data = sn.data();
     const message = {
-      id: data.id,
       ...data,
       createdAt: data.createdAt?.toDate(),
     } as Message;

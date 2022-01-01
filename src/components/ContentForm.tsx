@@ -34,17 +34,10 @@ export const ContentForm: FC<ContentFormProps> = ({ user }) => {
         type="submit"
         onClick={(e) => {
           e.preventDefault();
-          const col = collection(
-            firebaseFirestore,
-            `/users/${user.uid}/messages`,
-          ).withConverter(MessageConvertor);
-          if (message.id) {
-            setDoc(doc(col, message.id), message);
-          } else {
-            addDoc(col, message).then((docRef) =>
-              setMessage((prev) => ({ ...prev, id: docRef.id })),
-            );
-          }
+          const col = collection(firebaseFirestore, `/messages`).withConverter(
+            MessageConvertor,
+          );
+          addDoc(col, message).catch((e) => window.alert(e));
         }}
       >
         登録

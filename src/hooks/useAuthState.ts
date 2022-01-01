@@ -15,6 +15,5 @@ export const useAuthState = (): [User | null, boolean] => {
     return unsubscribe;
   }, [firebaseAuth]);
 
-  // TODO: Return error as third value.
   return [user, loading];
 };
