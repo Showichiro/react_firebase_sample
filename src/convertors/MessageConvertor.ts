@@ -24,4 +24,3 @@ export const MessageConvertor: FirestoreDataConverter<Message> = {
     return message;
   },
 };
-export default MessageConvertor;

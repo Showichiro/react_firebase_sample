@@ -7,11 +7,9 @@ interface AppProps {}
 
 const App = ({}: AppProps) => {
   return (
-    <>
-      <UserProvider>
-        <Main />
-      </UserProvider>
-    </>
+    <UserProvider>
+      <Main />
+    </UserProvider>
   );
 };
 export default App;

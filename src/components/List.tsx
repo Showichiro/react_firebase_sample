@@ -1,7 +1,7 @@
 import type { User } from 'firebase/auth';
 import { collection, onSnapshot } from 'firebase/firestore';
 import React, { FC, useEffect, useState } from 'react';
-import MessageConvertor from '../convertors/MessageConvertor';
+import { MessageConvertor } from '../convertors/MessageConvertor';
 import { firebaseFirestore } from '../firebase';
 import type { Message } from '../types/Message';
 
