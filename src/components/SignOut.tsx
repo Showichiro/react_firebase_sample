@@ -1,14 +1,15 @@
 import { signOut } from 'firebase/auth';
 import React, { FC } from 'react';
-import { firebaseAuth } from '../firebase';
+import { useFirebase } from '../hooks/useFirebase';
 
 export const SignOut: FC = () => {
+  const { auth } = useFirebase();
   return (
     <button
       type="submit"
       onClick={(e) => {
         e.preventDefault();
-        signOut(firebaseAuth).catch((e) => window.alert(e));
+        signOut(auth).catch((e) => window.alert(e));
       }}
     >
       ログアウト

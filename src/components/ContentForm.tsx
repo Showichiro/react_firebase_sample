@@ -1,8 +1,8 @@
 import type { User } from 'firebase/auth';
 import { collection, addDoc } from 'firebase/firestore';
 import React, { FC, useState } from 'react';
+import { useFirebase } from '../hooks/useFirebase';
 import { MessageConvertor } from '../convertors/MessageConvertor';
-import { firebaseFirestore } from '../firebase';
 import type { Message } from '../types/Message';
 
 type ContentFormProps = {
@@ -10,6 +10,7 @@ type ContentFormProps = {
 };
 
 export const ContentForm: FC<ContentFormProps> = ({ user }) => {
+  const { store } = useFirebase();
   const [message, setMessage] = useState<Message>({
     userId: user.uid,
     content: '',
@@ -34,10 +35,12 @@ export const ContentForm: FC<ContentFormProps> = ({ user }) => {
         type="submit"
         onClick={(e) => {
           e.preventDefault();
-          const col = collection(firebaseFirestore, `/messages`).withConverter(
+          const col = collection(store, `/messages`).withConverter(
             MessageConvertor,
           );
-          addDoc(col, message).catch((e) => window.alert(e));
+          addDoc(col, message)
+            .then(() => setMessage((prev) => ({ ...prev, content: '' })))
+            .catch((e) => window.alert(e));
         }}
       >
         登録
